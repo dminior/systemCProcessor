@@ -1,2 +1,3 @@
 ﻿  systemCProcessor.cpp
+D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\systemCProcessor.cpp(202,5): warning C4102: 'std': unreferenced label
   systemCProcessor.vcxproj -> D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\x64\Debug\systemCProcessor.exe

@@ -1,7 +1,7 @@
 #include <systemc.h>
 using namespace sc_core;
 
-SC_MODULE(Rejestry) {
+SC_MODULE(Registers) {
     //Sygna³y wejœciowe
     sc_in<bool> clk;
 
@@ -33,7 +33,7 @@ SC_MODULE(Rejestry) {
 
 
     //Proces g³ówny
-    void process() {
+    void register_process() {
         if (clk.posedge()) {
 
             //Sygna³ Sid
@@ -253,13 +253,13 @@ SC_MODULE(Rejestry) {
 
 
     //Konstruktor
-    SC_CTOR(Rejestry) {
-        SC_METHOD(process);
+    SC_CTOR(Registers) {
+        SC_METHOD(register_process);
         sensitive << clk.pos();
     }
 };
                              
-int sc_main(int argc, char* argv[]) {
+/*int sc_main(int argc, char* argv[]) {
     //Deklaracje sygna³ów
     sc_clock clock("clock", 20, SC_NS);
     sc_signal<sc_int<16>> DI, BA, BB, BC, IRout;
@@ -269,27 +269,27 @@ int sc_main(int argc, char* argv[]) {
     sc_signal<sc_int<32>> ADR;
 
     //Utworzenie instancji modu³u
-    Rejestry rejestry("rejestry");
+    Registers registers("MyRegisters");
 
     //Po³¹czenie sygna³ów
-    rejestry.clk(clock);
+    registers.clk(clock);
 
-    rejestry.DI(DI);
-    rejestry.BA(BA);
+    registers.DI(DI);
+    registers.BA(BA);
 
-    rejestry.Sbb(Sbb);
-    rejestry.Sbc(Sbc);
-    rejestry.Sba(Sba);
+    registers.Sbb(Sbb);
+    registers.Sbc(Sbc);
+    registers.Sba(Sba);
 
-    rejestry.Sid(Sid);
-    rejestry.Sa(Sa);
+    registers.Sid(Sid);
+    registers.Sa(Sa);
 
-    rejestry.BB(BB);
-    rejestry.BC(BC);
+    registers.BB(BB);
+    registers.BC(BC);
 
-    rejestry.IRout(IRout);
+    registers.IRout(IRout);
 
-    rejestry.ADR(ADR);
+    registers.ADR(ADR);
 
     //Przyk³adowe wartoœci sygna³ów 
     BA.write(2);
@@ -313,4 +313,4 @@ int sc_main(int argc, char* argv[]) {
     std::cout << "\nADR: " << ADR; //Address - wartoœæ adresu 
 
     return 0;
-}
+}*/

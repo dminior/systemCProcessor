@@ -135,8 +135,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="memorySystemModule.cpp" />
     <ClCompile Include="registersModule.cpp" />
-    <ClCompile Include="systemCProcessor.cpp" />
+    <ClCompile Include="aluModule.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

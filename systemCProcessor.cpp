@@ -161,16 +161,25 @@ SC_MODULE(ALU) {
     }
 };
 
-int sc_main(int argc, char* argv[]) {
+/*int sc_main(int argc, char* argv[]) {
+    Sekwecja operacji procesora
+        Pobieranie rozkazu (Fetch) -> PC,IR
+        Dekodowanie rozkazu -> Jednostka sterująca
+        Obliczanie adresu pośredniego
+        Pobieranie argumentów -> Rejestry
+        Wykonanie rozkazu -> ALU
+        Zpis wyniku ->Rejestry -> Układ współpracy z pamięcią
+        Cykl przerwania
+
 
     //Utworzenie sygnałów
     sc_signal<sc_int<16>> a_signal, b_signal, y_signal;
     sc_signal<bool> c_signal, z_signal, s_signal;
     sc_signal<sc_uint<4>> salu_signal;
 
-    sc_clock clock("clock", 10, SC_NS);
+    sc_clock clock("clock", 20, SC_NS);
     
-    // Utwórz instancję ALU
+    //Utworzenie instancji ALU
     ALU alu("aluModule");
 
     //Przypisanie wartości z sygnałów do portów w module
@@ -186,6 +195,7 @@ int sc_main(int argc, char* argv[]) {
 
     alu.clk(clock);
 
+    //Przykładowe wartości sygnałów
     a_signal.write(0b0100110000000001);
     b_signal.write(0b0110);
     salu_signal.write(15);
@@ -200,4 +210,4 @@ int sc_main(int argc, char* argv[]) {
 
     //std:cout << y_signal.read();
     return 0;
-}
+}*/

@@ -259,7 +259,7 @@ SC_MODULE(Registers) {
     }
 };
                              
-/*int sc_main(int argc, char* argv[]) {
+int sc_main(int argc, char* argv[]) {
     //Deklaracje sygna³ów
     sc_clock clock("clock", 20, SC_NS);
     sc_signal<sc_int<16>> DI, BA, BB, BC, IRout;
@@ -313,4 +313,4 @@ SC_MODULE(Registers) {
     std::cout << "\nADR: " << ADR; //Address - wartoœæ adresu 
 
     return 0;
-}*/
+}

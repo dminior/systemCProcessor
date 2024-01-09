@@ -54,7 +54,7 @@ SC_MODULE(busint) {
     }
 };
 
-int sc_main(int argc, char* argv[]) {
+/*int sc_main(int argc, char* argv[]) {
     // Deklaracje sygna³ów
     sc_signal<sc_int<32>> ADR;
     sc_signal<sc_int<16>> DO, D, DI;
@@ -91,4 +91,4 @@ int sc_main(int argc, char* argv[]) {
     std::cout << "\nOdczytane dane: " << busint.DI.read() << " z adresu: " << busint.AD.read();
 
     return 0;
-}
+}*/

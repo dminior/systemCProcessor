@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="controlModule.cpp" />
     <ClCompile Include="memorySystemModule.cpp" />
     <ClCompile Include="registersModule.cpp" />
     <ClCompile Include="aluModule.cpp" />

@@ -159,14 +159,14 @@ SC_MODULE(ALU) {
 };
 
 /*int sc_main(int argc, char* argv[]) {
-    Sekwecja operacji procesora
-        Pobieranie rozkazu (Fetch) -> PC,IR
-        Dekodowanie rozkazu -> Jednostka sterująca
-        Obliczanie adresu pośredniego
-        Pobieranie argumentów -> Rejestry
-        Wykonanie rozkazu -> ALU
-        Zpis wyniku ->Rejestry -> Układ współpracy z pamięcią
-        Cykl przerwania
+    //Sekwecja operacji procesora
+        //Pobieranie rozkazu (Fetch) -> PC,IR
+        //Dekodowanie rozkazu -> Jednostka sterująca
+        //Obliczanie adresu pośredniego
+       // Pobieranie argumentów -> Rejestry
+       // Wykonanie rozkazu -> ALU
+        //Zpis wyniku ->Rejestry -> Układ współpracy z pamięcią
+        //Cykl przerwania
 
 
     //Utworzenie sygnałów

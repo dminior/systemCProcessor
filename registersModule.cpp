@@ -1,39 +1,10 @@
 #include <systemc.h>
+#include "structHeaders.h"
 using namespace sc_core;
 
-SC_MODULE(Registers) {
-    //Sygna³y wejœciowe
-    sc_in<bool> clk;
 
-    sc_in<sc_int<16>> DI; //Data Input - przenosi dane wejœciowe
-    sc_in<sc_int<16>> BA; //Base Address - adres bazowy, u¿ywany w operacjach np. zapis, odczyt do pamiêci
-
-    sc_in<sc_bv<4>> Sbb, Sbc, Sba; //który z rejestrów A, B, C ma byæ u¿ywany w danej operacji
-
-    sc_in<sc_bv<3>> Sid; //sygna³ steruj¹cy dla dekodera instrukcji
-
-    sc_in<sc_bv<2>> Sa; //sygna³ steruj¹cy akumulator - który ma byæ u¿yty w instrukcji
-
-
-    //Sygna³y wyjœciowe
-    sc_out<sc_int<16>> BB, BC; //Base B - sygna³ reprezentuj¹cy wartoœci rejestrów B i C
-    sc_out<sc_int<16>> IRout; //Instruction Register Output - zawartoœæ rejestru instrukcji
-
-    sc_out<sc_int<32>> ADR; //Address - wartoœæ adresu 
-
-    //Rejestry ogólne
-    sc_int<16> TMP; //Temporary Accumulator - do przechowywania danych tymaczsowych w trakcie operacji
-    sc_int<16> A, B, C, D, E, F; //rejestry ogólnego przeznaczenia, A - akumulator
-    sc_int<16> IR; //Instruction Register - przechowuje aktualnie wykonywan¹ instrukcjê
-
-    sc_int<32> PC; //Program Counter - wskazuje nastêpn¹ instrukcjê w pamiêci
-    sc_int<32> AD; //Address High i Low (AD)
-    sc_int<32> SP; //Stack Pointer - aktualna pozycja stosu w pamiêci
-    sc_int<32> ATMP; //Temporary Accumulator - rejestr mog¹cy byæ u¿ywany w trakcie obliczeñ
-
-
-    //Proces g³ówny
-    void register_process() {
+//Proces g³ówny
+void Registers::register_process() {
         if (clk.posedge()) {
 
             //Sygna³ Sid
@@ -251,66 +222,59 @@ SC_MODULE(Registers) {
 
     }
 
-
-    //Konstruktor
-    SC_CTOR(Registers) {
-        SC_METHOD(register_process);
-        sensitive << clk.pos();
-    }
-};
                              
-int sc_main(int argc, char* argv[]) {
-    //Deklaracje sygna³ów
-    sc_clock clock("clock", 20, SC_NS);
-    sc_signal<sc_int<16>> DI, BA, BB, BC, IRout;
-    sc_signal<sc_bv<4>> Sbb, Sbc, Sba;
-    sc_signal<sc_bv<3>> Sid;
-    sc_signal<sc_bv<2>> Sa;
-    sc_signal<sc_int<32>> ADR;
-
-    //Utworzenie instancji modu³u
-    Registers registers("MyRegisters");
-
-    //Po³¹czenie sygna³ów
-    registers.clk(clock);
-
-    registers.DI(DI);
-    registers.BA(BA);
-
-    registers.Sbb(Sbb);
-    registers.Sbc(Sbc);
-    registers.Sba(Sba);
-
-    registers.Sid(Sid);
-    registers.Sa(Sa);
-
-    registers.BB(BB);
-    registers.BC(BC);
-
-    registers.IRout(IRout);
-
-    registers.ADR(ADR);
-
-    //Przyk³adowe wartoœci sygna³ów 
-    BA.write(2);
-
-    //Przyk³adowe wartoœci sygna³ów struj¹cych
-    Sid.write(1);
-    Sa.write(1);
-
-    Sbb.write(0b1011); //PC(15-0) do BB
-    Sbc.write(0b1011); //PC(15-0) do BC
-    Sba.write(0b0010); //BA do A
-
-
-    //Uruchomienie symulacji
-    sc_start(20, SC_NS);
-
-    //std::cout << rejestry.PC;
-
-    std::cout << "\n\nBB: " << BB << " BC: " << BC; //Base B - sygna³ reprezentuj¹cy wartoœci rejestrów B i C
-    std::cout << "\nIRout: " << IRout; //Instruction Register Output - zawartoœæ rejestru instrukcji
-    std::cout << "\nADR: " << ADR; //Address - wartoœæ adresu 
-
-    return 0;
-}
+//int sc_main(int argc, char* argv[]) {
+//    //Deklaracje sygna³ów
+//    sc_clock clock("clock", 20, SC_NS);
+//    sc_signal<sc_int<16>> DI, BA, BB, BC, IRout;
+//    sc_signal<sc_bv<4>> Sbb, Sbc, Sba;
+//    sc_signal<sc_bv<3>> Sid;
+//    sc_signal<sc_bv<2>> Sa;
+//    sc_signal<sc_int<32>> ADR;
+//
+//    //Utworzenie instancji modu³u
+//    Registers registers("MyRegisters");
+//
+//    //Po³¹czenie sygna³ów
+//    registers.clk(clock);
+//
+//    registers.DI(DI);
+//    registers.BA(BA);
+//
+//    registers.Sbb(Sbb);
+//    registers.Sbc(Sbc);
+//    registers.Sba(Sba);
+//
+//    registers.Sid(Sid);
+//    registers.Sa(Sa);
+//
+//    registers.BB(BB);
+//    registers.BC(BC);
+//
+//    registers.IRout(IRout);
+//
+//    registers.ADR(ADR);
+//
+//    //Przyk³adowe wartoœci sygna³ów 
+//    BA.write(2);
+//
+//    //Przyk³adowe wartoœci sygna³ów struj¹cych
+//    Sid.write(1);
+//    Sa.write(1);
+//
+//    Sbb.write(0b1011); //PC(15-0) do BB
+//    Sbc.write(0b1011); //PC(15-0) do BC
+//    Sba.write(0b0010); //BA do A
+//
+//
+//    //Uruchomienie symulacji
+//    sc_start(20, SC_NS);
+//
+//    //std::cout << rejestry.PC;
+//
+//    std::cout << "\n\nBB: " << BB << " BC: " << BC; //Base B - sygna³ reprezentuj¹cy wartoœci rejestrów B i C
+//    std::cout << "\nIRout: " << IRout; //Instruction Register Output - zawartoœæ rejestru instrukcji
+//    std::cout << "\nADR: " << ADR; //Address - wartoœæ adresu 
+//
+//    return 0;
+//}

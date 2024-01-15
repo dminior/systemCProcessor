@@ -1,42 +1,7 @@
 #include <systemc.h>
+#include "structHeaders.h"
 
-SC_MODULE(Control) {
-	// Porty wejœciowe
-	sc_in<bool> clk;
-
-	sc_in<sc_int<16>> IR; // Wejœcie rejestru instrukcji
-
-	sc_in<bool> reset; // Sygna³ resetu
-
-	//Flagi
-	sc_in<bool> C; //Flaga przeniesienia
-	sc_in<bool> Z; //Flaga zerowa
-	sc_in<bool> S; //Flaga znaku
-	sc_in<bool> INT; //Flaga przerwania
-
-
-	//Porty wyjœciowe
-	sc_out<sc_bv<4>> Salu, Sbb, Sbc, Sba;
-	sc_out<sc_bv<3>> Sid; //Wyjœcie reprezentuj¹ce sygna³ steruj¹cy dla dekodera instrukcji
-	sc_out<sc_bv<2>> Sa; //Sygna³ steruj¹cy akumulatora
-
-	sc_out<bool> LDF; //Sygna³ wczytywania danych
-	sc_out<bool> Smar, Smbr; //Sygna³y aktywacji rejestru adresowego i danych
-	sc_out<bool> WR, RD; //Sygna³y zapisu i odczytu
-
-	sc_out<bool> INTA; //Sygna³ przerwania
-	sc_out<bool> MIO; //Sygna³ Memory Input/Output
-
-	//Typ wyliczeniowy dla stanów
-	enum state_type {
-		m0, m1, m10, m11, m12, m13, m14, m15, m16, m17, m20, m21, m22, m23, m24, m25, m26, m27, m28,
-		m29, m30, m31, m32, m33, m34, m35, m36, m37, m38, m40, m41, m50, m51, m52, m53, m60, m61, m62, m63, m64, m65,
-		m66, m67, m68, m69, m70, m80, m81, m82, m83, m84, m85, m86, m87, m88, m89, m90, m9
-	};
-	sc_signal<state_type> state;
-
-	//Proces stanu
-	void state_process() {
+	void Control::state_process() {
 		if (reset.read() == true) {
 			state = m0;
 		}
@@ -85,9 +50,9 @@ SC_MODULE(Control) {
 					case 00011:
 						state = m24;
 						break;
-					case 00100:
+					/*case 00100:
 						state = m25;
-						break;
+						break;*/
 					case 00101:
 						state = m26;
 						break;
@@ -135,9 +100,9 @@ SC_MODULE(Control) {
 				case 010:
 					state = m40;
 					break;
-				case 011:
+				/*case 011:
 					state = m50;
-					break;
+					break;*/
 				case 100:
 					state = m60;
 					break;
@@ -187,6 +152,7 @@ SC_MODULE(Control) {
 				else {
 					state = m0;
 				}
+				break;
 			case m20:
 				if (INT.read() == true) {
 					state = m9;
@@ -222,14 +188,14 @@ SC_MODULE(Control) {
 					state = m0;
 				}
 				break;
-			case m25:
+			/*case m25:
 				if (INT.read() == true) {
 					state = m9;
 				}
 				else {
 					state = m0;
 				}
-				break;
+				break;*/
 			case m26:
 				if (INT.read() == true) {
 					state = m9;
@@ -362,7 +328,7 @@ SC_MODULE(Control) {
 					state = m0;
 				}
 				break;
-			case m50:
+			/*case m50:
 				state = m51;
 				break;
 			case m51:
@@ -378,7 +344,7 @@ SC_MODULE(Control) {
 				else {
 					state = m0;
 				}
-				break;
+				break;*/
 			case m60:
 				switch (IR.read().range(12, 10)) {
 				case 000:
@@ -406,6 +372,7 @@ SC_MODULE(Control) {
 					state = m68;
 					break;
 				}
+				break;
 			case m61:
 				if (INT.read() == true) {
 					state = m9;
@@ -589,93 +556,377 @@ SC_MODULE(Control) {
 			case m9:
 				state = m9;
 				break;
-			}
+			}	
 		}
 	}
+
+
+
 	// Proces logiki
-	void logic_process() {
+	void Control::logic_process() {
 		switch (state) {
 		case m0:
-			Sa = "01"; Sbb = "0000"; Sba = "0000"; Sid = "001"; Sbc = "0000"; MIO = '1';
-			Smar = '1'; Smbr = '0'; WR = '0'; RD = '1'; Salu = "0000"; LDF = '0'; INTA = '0';
+			Sa = 0b01; 
+			Sbb = 0b0000; 
+			Sba = 0b0000; 
+			Sid = 0b001; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
 			break;
 		case m1:
-			Sa = "00"; Sbb = "0000"; Sba = "0000"; Sid = "000"; Sbc = "0000"; MIO = '1';
-			Smar = '0'; Smbr = '0'; WR = '0'; RD = '0'; Salu = "0000"; LDF = '0'; INTA = '0';
+			Sa = 0b00; 
+			Sbb = 0b0000; 
+			Sba = 0b0000; 
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
 			break;
 		case m10:
-			Sa = "00"; Sbb = "0000"; Sba = "0000"; Sid = "000"; Sbc = "0000"; MIO = '1';
-			Smar = '0'; Smbr = '0'; WR = '0'; RD = '0'; Salu = "0000"; LDF = '0'; INTA = '0';
+			Sa = 0b00; 
+			Sbb = 0b0000; 
+			Sba = 0b0000; 
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
 			break;
 		case m11:
-			Sa = "10"; Sbb = "1010"; Sba = "0000"; Sid = "011"; Sbc = "0000"; MIO = '1';
-			Smar = '1'; Smbr = '1'; WR = '1'; RD = '0'; Salu = "0000"; LDF = '0'; INTA = '0';
-			// ... (analogicznie do oryginalnego kodu)
+			Sa = 0b10; 
+			Sbb = 0b1010; 
+			Sba = 0b0000; 
+			Sid = 0b011; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 1; WR = 1; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
 			break;
-			// ... (analogicznie do oryginalnego kodu)
+		case m12:
+			Sa = 0b10; 
+			Sbb = 0b1010; 
+			Sba = 0b0001; 
+			Sid = 0b011; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 1; WR = 1; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m13:
+			Sa = 0b00; 
+			Sbb = 0b1110; 
+			Sba = 0b1011; 
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m14:
+			Sa = 0b00; 
+			Sbb = 0b1111; 
+			Sba = 0b1010; 
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m15:
+			Sa = 0b00; 
+			Sbb = 0b0000; 
+			Sba = 0b0001; 
+			Sid = 0b010; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m16:
+			Sa = 0b10; 
+			Sbb = 0b0000; 
+			Sba = 0b1010; 
+			Sid = 0b010; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m17:
+			Sa = 0b10; 
+			Sbb = 0b0000; 
+			Sba = 0b1011; 
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m20:
+			Sa = 0b10; 
+			Sbb = IR.read().range(3, 0).to_int(); 
+			Sba = 0b0001; Sid = 0b011; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 1; WR = 1; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m21:
+			Sa = 0b00; 
+			Sbb = 0b0000; 
+			Sba = 0b0001; 
+			Sid = 0b010; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m22:
+			Sa = 0b10; 
+			Sbb = 0b0000; Sba = IR.read().range(3, 0).to_int(); 
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m23:
+			Sa = 0b00; 
+			Sbb = IR.read().range(3, 0).to_int(); 
+			Sba = IR.read().range(3, 0).to_int(); 
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0101; LDF = 0; INTA = 0;
+			break;
+		case m24:
+			Sa = 0b00; 
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b1101; LDF = 1; INTA = 0;
+			break;
+		case m26:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b1000; LDF = 0; INTA = 0;
+			break;
+		case m27:
+			Sa = 0b00; 
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b1111; LDF = 0; INTA = 0;
+			break;
+		case m28:
+			Sa = 0b00; 
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b1110; LDF = 0; INTA = 0;
+			break;
+		case m29:
+			Sa = 0b00; 
+			Sbb = 0b0000;
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m30:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = 0b0001;
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 1; WR = 1; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m31:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0010; LDF = 1; INTA = 0;
+			break;
+		case m32:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0011; LDF = 1; INTA = 0;
+			break;
+		case m33:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = 0b0001;
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0011; LDF = 1; INTA = 0;
+			break;
+		case m34:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0101; LDF = 1; INTA = 0;
+			break;
+		case m35:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0100; LDF = 1; INTA = 0;
+			break;
+
+		case m36:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0110; LDF = 1; INTA = 0;
+			break;
+		case m37:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 0;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m38:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 0;
+			Smar = 1; Smbr = 1; WR = 1; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m40:
+			Sa = 0b01;
+			Sbb = 0b0000;
+			Sba = 0b0001;
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m41:
+			Sa = 0b00;
+			Sbb = 0b1011;
+			Sba = 0b1011;
+			Sid = 0b000; Sbc = 0b0001; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0010; LDF = 1; INTA = 0;
+			break;
+		case m60:
+			Sa = 0b01;
+			Sbb = 0b0000;
+			Sba = 0b0001;
+			Sid = 0b001; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m61:
+			Sa = 0b00;
+			Sbb = 0b0001;
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m62:
+			Sa = 0b00;
+			Sbb = 0b1111;
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m63:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0001; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0010; LDF = 1; INTA = 0;
+			break;
+		case m64:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0001; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0011; LDF = 1; INTA = 0;
+			break;
+		case m65:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = 0b0001;
+			Sid = 0b000; Sbc = 0b0001; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0011; LDF = 1; INTA = 0;
+			break;
+		case m66:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0001; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0101; LDF = 0; INTA = 0;
+			break;
+		case m67:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0001; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0100; LDF = 0; INTA = 0;
+			break;
+		case m68:
+			Sa = 0b00;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0001; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0110; LDF = 1; INTA = 0;
+			break;
+		/*case m80:
+			Sa = 0b01;
+			Sbb = 0b0000;
+			Sba = 0b10000;
+			Sid = 0b001; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+
+		case m81:
+			Sa = 0b01;
+			Sbb = 0b0000;
+			Sba = 0b10001;
+			Sid = 0b001; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;*/
+		case m82:
+			Sa = 0b11;
+			Sbb = 0b0000;
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m83:
+			Sa = 0b11;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = 0b0001;
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 1; WR = 1; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
+		case m84:
+			Sa = 0b11;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0010; LDF = 1; INTA = 0;
+			break;
+		case m85:
+			Sa = 0b11;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0011; LDF = 1; INTA = 0;
+			break;
+		case m86:
+			Sa = 0b11;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = 0b0001;
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0011; LDF = 1; INTA = 0;
+			break;
+		case m87:
+			Sa = 0b11;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0101; LDF = 0; INTA = 0;
+			break;
+		case m88:
+			Sa = 0b11;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0100; LDF = 0; INTA = 0;
+			break;
+		case m89:
+			Sa = 0b11;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 1; RD = 0; Salu = 0b0110; LDF = 1; INTA = 0;
+			break;
+		case m90:
+			Sa = 0b11;
+			Sbb = IR.read().range(3, 0).to_int();
+			Sba = IR.read().range(3, 0).to_int();
+			Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0110; LDF = 1; INTA = 0;
+			break;
+
+		case m9:
+			Sa = 0b01; 
+			Sbb = 0b0000; 
+			Sba = 0b0000; 
+			Sid = 0b001; Sbc = 0b0000; MIO = 1;
+			Smar = 1; Smbr = 0; WR = 0; RD = 1; Salu = 0b0000; LDF = 0; INTA = 0;
+			break;
 		default:
-			Sa = "00"; Sbb = "0000"; Sba = "0000"; Sid = "000"; Sbc = "0000"; MIO = '1';
-			Smar = '0'; Smbr = '0'; WR = '0'; RD = '0'; Salu = "0000"; LDF = '0'; INTA = '0';
+			Sa = 0b00; Sbb = 0b0000; Sba = 0b0000; Sid = 0b000; Sbc = 0b0000; MIO = 1;
+			Smar = 0; Smbr = 0; WR = 0; RD = 0; Salu = 0b0000; LDF = 0; INTA = 0;
 			break;
 		}
 	}
 
-	// Konstruktor
-	SC_CTOR(Control) {
-		SC_METHOD(state_process);
-		sensitive << clk.pos() << reset;
-
-		SC_METHOD(logic_process);
-		sensitive << state;
-	}
-};
-
-int sc_main(int argc, char* argv[]) {
-	// Deklaracje sygna³ów
-	sc_clock clock("clock", 20, SC_NS);
-	sc_signal<sc_int<16>> IR;
-	sc_signal<bool> reset, C, Z, S, INT;
-	sc_signal<sc_bv<4>> Salu, Sbb, Sbc, Sba;
-	sc_signal<sc_bv<3>> Sid;
-	sc_signal<sc_bv<2>> Sa;
-	sc_signal<bool> LDF, Smar, Smbr, WR, RD, INTA, MIO;
-
-	// Utworzenie instancji modu³u
-	Control control("MyControl");
-
-	// Po³¹czenie sygna³ów
-	control.clk(clock);
-	control.IR(IR);
-	control.reset(reset);
-	control.C(C);
-	control.Z(Z);
-	control.S(S);
-	control.INT(INT);
-	control.Salu(Salu);
-	control.Sbb(Sbb);
-	control.Sbc(Sbc);
-	control.Sba(Sba);
-	control.Sid(Sid);
-	control.Sa(Sa);
-	control.LDF(LDF);
-	control.Smar(Smar);
-	control.Smbr(Smbr);
-	control.WR(WR);
-	control.RD(RD);
-	control.INTA(INTA);
-	control.MIO(MIO);
-
-	// Przyk³adowe wartoœci sygna³ów
-	IR.write(0x1234);
-
-	reset.write(false);
-	C.write(false);
-	Z.write(false);
-	S.write(false);
-	INT.write(false);
-
-	// Uruchomienie symulacji
-	sc_start(1, SC_NS);
-
-	return 0;
-}

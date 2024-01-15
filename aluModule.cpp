@@ -1,27 +1,10 @@
 ﻿#include <systemc.h>
+#include "structHeaders.h"
 using namespace sc_core;
 
-SC_MODULE(ALU) {
-    //Deklaracja portów
-    sc_in<sc_int<16>> a; //szesnastobitowa liczba całkowita bez znaku
-    sc_in<sc_int<16>> b;
-    sc_in<sc_uint<4>> salu; //sygnał sterujący
-    //sc_in<bool> LDF;
-    sc_in<bool> clk;
 
-    // Wyjścia
-    sc_out<sc_int<16>> y; //wynik
-    sc_out<bool> c; //przeniesienie
-    sc_out<bool> z; //zero
-    sc_out<bool> s; //znak
-
-    sc_int<17> y_temp;
-    
-    sc_int <1> temp_z;
-    sc_int <1> temp_s;
-
-    // Proces główny
-    void alu_process() {
+//Proces główny
+void ALU::alu_process() {
         y_temp = y.read();
 
         // Przetwarzanie operacji w zależności od wartości Salu
@@ -151,12 +134,6 @@ SC_MODULE(ALU) {
         std::cout << "\nBit znaku: " << s << "\n\n";
 
     }
-    SC_CTOR(ALU) {
-        SC_METHOD(alu_process);
-        dont_initialize();
-        sensitive << clk.pos();
-    }
-};
 
 /*int sc_main(int argc, char* argv[]) {
     //Sekwecja operacji procesora

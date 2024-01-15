@@ -1,24 +1,8 @@
 #include <systemc.h>
-
-SC_MODULE(busint) {
-    //Sygna³y wejœciowe
-    sc_in<sc_int<32>> ADR; //Adres WEJŒCIOWE
-    sc_in<sc_int<16>> DO; //Dane WEJŒCIOWE (IN)
-
-    //Sygana³y steruj¹ce operacjami na magistrali
-    sc_in<bool> Smar; // 0 - pamiêtanie adresu, 1 - zapis
-    sc_in<bool> Smbr; // 0 - pamiêtanie danych, 1 - zapis
-    sc_in<bool> WRin; // uruchom/zatrzymaj operacjê zapisu
-    sc_in<bool> RDin; // uruchom/zatrzymaj operacjê odczytu
-
-    //Sygna³y wyjœciowe
-    sc_out<sc_int<32>> AD; //Adres WYJŒCIOWE
-    sc_inout<sc_int<16>> D; //Dane IN-OUT
-    sc_out<sc_int<16>> DI; //Dane OUT
-    sc_out<bool> WR, RD; //Informuj¹ czy aktualnie operacja zapisu (WR) czy odczytu (RD)
+#include "structHeaders.h"
 
     //Proces g³ówny
-    void process() {
+    void Busint::process() {
 
         // Zmienne wewnêtrzne
         sc_int<16> MBRin, MBRout; //Dane odczytane i zapisane do magistrali
@@ -47,21 +31,16 @@ SC_MODULE(busint) {
         RD.write(RDin);
     }
 
-    //Konstruktor
-    SC_CTOR(busint) {
-        SC_METHOD(process);
-        sensitive << Smar << ADR << Smbr << DO << D << WRin << RDin;
-    }
-};
 
 /*int sc_main(int argc, char* argv[]) {
     // Deklaracje sygna³ów
+    sc_clock clock("clock", 20, SC_NS);
     sc_signal<sc_int<32>> ADR;
     sc_signal<sc_int<16>> DO, D, DI;
     sc_signal<bool> Smar, Smbr, WRin, RDin, WR, RD;
 
     // Utworzenie instancji modu³u
-    busint busint("MyBusint");
+    Busint busint("MyBusint");
 
     // Po³¹czenie sygna³ów
     busint.ADR(ADR);

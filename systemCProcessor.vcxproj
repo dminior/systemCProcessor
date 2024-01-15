@@ -136,9 +136,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="controlModule.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="memorySystemModule.cpp" />
     <ClCompile Include="registersModule.cpp" />
     <ClCompile Include="aluModule.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="structHeaders.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

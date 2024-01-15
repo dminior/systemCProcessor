@@ -1,40 +1,7 @@
 ﻿  controlModule.cpp
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(262,18): error C2196: case value '9' already used
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(269,18): error C2196: case value '9' already used
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(276,18): error C2196: case value '9' already used
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(283,18): error C2196: case value '9' already used
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(300,85): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(301,20): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(301,32): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(301,42): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(301,52): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(301,78): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(301,90): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(304,85): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(305,20): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(305,32): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(305,42): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(305,52): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(305,78): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(305,90): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(308,85): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(309,20): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(309,32): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(309,42): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(309,52): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(309,78): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(309,90): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(312,85): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(313,20): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(313,32): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(313,42): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(313,52): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(313,78): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(313,90): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(318,85): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(319,20): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(319,32): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(319,42): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(319,52): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(319,78): warning C4305: 'argument': truncation from 'char' to 'const bool'
-D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\controlModule.cpp(319,90): warning C4305: 'argument': truncation from 'char' to 'const bool'
+  main.cpp
+  memorySystemModule.cpp
+  registersModule.cpp
+  aluModule.cpp
+  Generating Code...
+  systemCProcessor.vcxproj -> D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\x64\Debug\systemCProcessor.exe

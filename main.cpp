@@ -14,6 +14,8 @@ int sc_main(int argc, char* argv[]) {
 
 	sc_in<sc_int<32>> ADR;
 	sc_in<sc_int<16>> DO;
+	sc_in<sc_int<16>> BA;
+	sc_inout<sc_int<16>> D;
 
 	//Utworzenie instancji modu³u rejestrów
 	Registers registers("MyRegisters");
@@ -42,27 +44,25 @@ int sc_main(int argc, char* argv[]) {
 		
 	alu.clk(clock);
 	alu.salu(control.Salu);
+	alu.a(registers.BB);
+	alu.b(registers.BC);
 
 	registers.clk(clock);
 	registers.Sbb(control.Sbb);
 	registers.Sbc(control.Sbc);
 	registers.Sba(control.Sba);
 	registers.Sid(control.Sid);
-
 	registers.DI(busint.DI);
-	registers.BA(busint.DI);
+	registers.BA(alu.y);
 
 	busint.clk(clock);
 	busint.Smar(control.Smar);
 	busint.Smbr(control.Smbr);
 	busint.WRin(control.WR);
 	busint.RDin(control.RD);
-
-	busint.RDin(control.RD);
-	busint.WRin(control.WR);
-
-	busint.ADR(ADR);
-	//busint.D(ADR);
+	busint.ADR(registers.ADR);
+	busint.DO(alu.y); //???
+	//busint.D(D);
 	
 
 

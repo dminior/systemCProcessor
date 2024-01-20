@@ -1,7 +1,2 @@
-﻿  controlModule.cpp
-  main.cpp
-  memorySystemModule.cpp
-  registersModule.cpp
-  aluModule.cpp
-  Generating Code...
+﻿  main.cpp
   systemCProcessor.vcxproj -> D:\Daniel\Studia\SEMESTR 5\ProjektSW\systemCProcessor\x64\Debug\systemCProcessor.exe

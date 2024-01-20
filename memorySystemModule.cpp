@@ -9,6 +9,7 @@
         sc_int<32> MAR; //Adres odczytany z magistrali
 
         //Logika poszczególnych sygna³ów steruj¹cych magistrali
+
         if (Smar.read() == 1) { 
             MAR = ADR.read();
         }

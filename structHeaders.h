@@ -5,7 +5,7 @@ SC_MODULE(ALU) {
     //Deklaracja portów
     sc_in<sc_int<16>> a; //szesnastobitowa liczba ca³kowita bez znaku
     sc_in<sc_int<16>> b;
-    sc_in<sc_uint<4>> salu; //sygna³ steruj¹cy
+    sc_in<sc_bv<4>> salu; //sygna³ steruj¹cy
     sc_in<bool> LDF;
     sc_in<bool> clk;
 
@@ -70,6 +70,7 @@ SC_MODULE(Registers) {
 };
 SC_MODULE(Busint) {
     //Sygna³y wejœciowe
+    sc_in<bool> clk;
     sc_in<sc_int<32>> ADR; //Adres WEJŒCIOWE
     sc_in<sc_int<16>> DO; //Dane WEJŒCIOWE (IN)
 
@@ -89,7 +90,7 @@ SC_MODULE(Busint) {
 	void process();
     SC_CTOR(Busint) {
         SC_METHOD(process);
-        sensitive << Smar << ADR << Smbr << DO << D << WRin << RDin;
+        sensitive << clk.pos();// << Smar << ADR << Smbr << DO << D << WRin << RDin;
     }
 };
 

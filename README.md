@@ -17,6 +17,3 @@ The project consists of several modules corresponding to individual elements of 
 
 > [!IMPORTANT]
 >Before starting, ensure you have the SystemC library installed. Download and install the SystemC library from www.accellera.org.
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
